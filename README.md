@@ -19,3 +19,6 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/scored](https://hexdocs.pm/scored).
 
+## Resources
+
+[Article](https://medium.com/@loganbbres/elixir-websocket-chat-example-c72986ab5778)
