@@ -28,7 +28,7 @@ Navigate to `localhost:4000` to view the application.
 
 # Supervision Tree
 
-<img src="/documentation/simplified_supervision_tree.png" width="800px">
+<img src="/documentation/simplified_supervision_tree.png" width="600px">
 
 # Resources
 
