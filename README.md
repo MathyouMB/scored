@@ -8,7 +8,7 @@ Scored is an elixir based web application for holding scrum planning poker 🃏.
 
 # Setup
 
-Ensure you have Elixir installed and the following command to setup project dependencies.
+Ensure you have Elixir installed and run the following command to setup project dependencies.
 
 ```elixir
 
