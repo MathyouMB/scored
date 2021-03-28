@@ -1,13 +1,31 @@
 # Scored
 
-**TODO: Add description**
+<img src="/priv/static/images/logo2.png" width="400px">
+
+**Scored is an elixir based web application for holding scrum planning poker.**
+
+<img src="/documentation/main.png" width="800px">
+
+# Setup
+
+Ensure you have Elixir installed and the following command to setup project dependencies.
+
+```elixir
+
+mix deps.get
+
+```
+
+Run the following command to run the application.
+
+```elixir
+
+iex -S mix
+
+```
+
+Navigate to localhost:4000 to view the application.
 
 ## Resources
 
 [Article](https://medium.com/@loganbbres/elixir-websocket-chat-example-c72986ab5778)
-[Dynamic Supervisor](https://thoughtbot.com/blog/how-to-start-processes-with-dynamic-names-in-elixir)
-
-## Useful Commands
-
-Supervisor.which_children(Scored.Application)
-Supervisor.which_children(Scored.Supervisor.RoomSupervisor)
