@@ -1,8 +1,8 @@
 # Scored
 
-<img src="/priv/static/images/logo2.png" width="400px">
-
 **Scored is an elixir based web application for holding scrum planning poker.**
+
+# Screenshot
 
 <img src="/documentation/main.png" width="800px">
 
