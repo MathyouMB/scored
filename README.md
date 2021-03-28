@@ -26,6 +26,12 @@ iex -S mix
 
 Navigate to `localhost:4000` to view the application.
 
+# Supervision Tree
+
+The following is a simplified representation of the Supervision Tree used in this application.
+
+<img src="/documentation/simplified_supervision_tree.png" width="600px">
+
 # Resources
 
 The following [article](https://medium.com/@loganbbres/elixir-websocket-chat-example-c72986ab5778) was extremely helpful for helping start this project.
