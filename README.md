@@ -24,7 +24,7 @@ iex -S mix
 
 ```
 
-Navigate to localhost:4000 to view the application.
+Navigate to `localhost:4000` to view the application.
 
 ## Resources
 
