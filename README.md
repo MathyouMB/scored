@@ -1,6 +1,8 @@
 # Scored
 
-**Scored is an elixir based web application for holding scrum planning poker 🃏.**
+Scored is an elixir based web application for holding scrum planning poker 🃏.
+
+<hr>
 
 <img src="/documentation/main.png" width="800px">
 
