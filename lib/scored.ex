@@ -4,6 +4,11 @@ defmodule Scored do
 
   def start(_type, _args) do
     children = [
+      Scored.Gen.Uuid,
+      DynamicSupervisor.child_spec(
+        strategy: :one_for_one,
+        name: Scored.Supervisor.RoomSupervisor
+      ),
       Plug.Cowboy.child_spec(
         scheme: :http,
         plug: Scored.Router,
@@ -13,8 +18,12 @@ defmodule Scored do
         ]
       ),
       Registry.child_spec(
+        keys: :unique,
+        name: Registry.Rooms
+      ),
+      Registry.child_spec(
         keys: :duplicate,
-        name: Registry.Scored
+        name: Registry.Connections
       )
     ]
 
@@ -25,11 +34,10 @@ defmodule Scored do
   defp dispatch do
     [
       {:_,
-        [
-          {"/ws", Scored.SocketHandler, []}, # /[...]
-          {:_, Plug.Cowboy.Handler, {Scored.Router, []}}
-        ]
-      }
+       [
+         {"/ws/:room_id", Scored.SocketHandler, []},
+         {:_, Plug.Cowboy.Handler, {Scored.Router, []}}
+       ]}
     ]
   end
 end

@@ -2,41 +2,62 @@ defmodule Scored.SocketHandler do
   @behaviour :cowboy_websocket
 
   def init(request, _state) do
-    IO.inspect("init")
-    IO.inspect(request)
-    state = %{registry_key: request.path}
-
+    room_id = String.split(request.path, "/") |> List.last()
+    state = %{registry_key: room_id}
     {:cowboy_websocket, request, state}
   end
 
   def websocket_init(state) do
-    IO.inspect("websocket_init")
-    IO.inspect(state)
-    IO.inspect(self())
-    Registry.Scored
+    Registry.Connections
     |> Registry.register(state.registry_key, {})
 
+    pid = Scored.Helpers.Rooms.get_room_pid(state.registry_key)
+    Scored.Gen.Room.update_member_count(pid, 1)
+
+    data =
+      %{
+        room: Scored.Gen.Room.state(pid),
+        message: "member_joined"
+      }
+      |> Jason.encode!()
+
+    Scored.Helpers.Connections.publish_with_self(state.registry_key, data)
     {:ok, state}
   end
 
   def websocket_handle({:text, json}, state) do
     payload = Jason.decode!(json)
-    message = payload["data"]["message"]
-    IO.inspect(message)
+    vote = payload["data"]["vote"]
 
-    Registry.Scored
-    |> Registry.dispatch(state.registry_key, fn entries ->
-      for {pid, _} <- entries do
-        if pid != self() do
-          Process.send(pid, message, [])
-        end
-      end
-    end)
+    pid = Scored.Helpers.Rooms.get_room_pid(state.registry_key)
+    Scored.Gen.Room.add_vote(pid, String.to_integer(vote))
 
-    {:reply, {:text, message}, state}
+    data =
+      %{
+        room: Scored.Gen.Room.state(pid),
+        message: "member_voted"
+      }
+      |> Jason.encode!()
+
+    Scored.Helpers.Connections.publish(state.registry_key, data)
+    {:reply, {:text, data}, state}
   end
 
   def websocket_info(info, state) do
     {:reply, {:text, info}, state}
+  end
+
+  def terminate(_reason, _partial_req, state) do
+    pid = Scored.Helpers.Rooms.get_room_pid(state.registry_key)
+    Scored.Gen.Room.update_member_count(pid, -1)
+
+    data =
+      %{
+        room: Scored.Gen.Room.state(pid),
+        message: "member_left"
+      }
+      |> Jason.encode!()
+
+    Scored.Helpers.Connections.publish(state.registry_key, data)
   end
 end
