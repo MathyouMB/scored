@@ -28,9 +28,7 @@ Navigate to `localhost:4000` to view the application.
 
 # Resources
 
-The following article was extremely helpful for helping start this project.
-
-[Article](https://medium.com/@loganbbres/elixir-websocket-chat-example-c72986ab5778)
+The following [article](https://medium.com/@loganbbres/elixir-websocket-chat-example-c72986ab5778) was extremely helpful for helping start this project.
 
 # License
 
