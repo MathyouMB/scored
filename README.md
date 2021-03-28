@@ -1,6 +1,6 @@
 # Scored
 
-Scored is an elixir based web application for holding scrum planning poker 🃏.
+Scored is an elixir based web application for holding scrum planning poker 🃏. This application was built to build a deeper understanding of OTP, concurrency, and the Elixir ecosystem. I intentionally built this application without a larger framework like Phoenix so that I would have the chance to implement key OTP concepts on my own.
 
 <hr>
 
