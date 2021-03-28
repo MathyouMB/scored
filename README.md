@@ -26,6 +26,12 @@ iex -S mix
 
 Navigate to `localhost:4000` to view the application.
 
-## Resources
+# Resources
+
+The following article was extremely helpful for helping start this project.
 
 [Article](https://medium.com/@loganbbres/elixir-websocket-chat-example-c72986ab5778)
+
+# License
+
+MIT. See <a href="https://github.com/MathyouMB/scored/blob/master/LICENSE">LICENSE</a> for more details.
