@@ -14,7 +14,7 @@ defmodule Scored do
         plug: Scored.Router,
         options: [
           dispatch: dispatch(),
-          port: 4000
+          port: get_port()
         ]
       ),
       Registry.child_spec(
@@ -39,5 +39,14 @@ defmodule Scored do
          {:_, Plug.Cowboy.Handler, {Scored.Router, []}}
        ]}
     ]
+  end
+
+  defp get_port() do
+    port_env_variable = System.get_env("PORT")
+    if is_nil(port_env_variable) do
+      4000
+    else
+      String.to_integer(port_env_variable)
+    end
   end
 end
