@@ -29,13 +29,13 @@
 
     const getEnv = () => {
         let domain = (new URL(window.location.href))
-        
-        if (domain.hostname === 'localhost') {
-            return ''
+  
+        if (domain.protocol.includes('s')) {
+            return 's'
         }
   
-        return 's'
-      }
+        return ''
+    }
 
     const requestHandler = new RequestHandler()
     document.getElementById("nav")
