@@ -30,7 +30,7 @@ defmodule Scored.SocketHandler do
     vote = payload["data"]["vote"]
 
     pid = Scored.Helpers.Rooms.get_room_pid(state.registry_key)
-    Scored.Gen.Room.add_vote(pid, String.to_integer(vote))
+    Scored.Gen.Room.add_vote(pid, vote)
 
     data =
       %{
