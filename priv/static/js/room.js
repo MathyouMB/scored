@@ -88,7 +88,7 @@
 
     const getDomain = () => {
       let domain = (new URL(window.location.href))
-      
+    
       if (domain.hostname === 'localhost') {
           return domain.hostname + ':4000' 
       }
@@ -98,12 +98,12 @@
 
     const getEnv = () => {
       let domain = (new URL(window.location.href))
-      
-      if (domain.hostname === 'localhost') {
-          return ''
+
+      if (domain.protocol.includes('s')) {
+          return 's'
       }
 
-      return 's'
+      return ''
     }
 
     const isOwner = () => {
