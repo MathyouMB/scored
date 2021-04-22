@@ -40,7 +40,7 @@ body {
     align-items:center;
     min-height:8.5vh;
     max-height: fit-content;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
     width:100vw;
     position:fixed;
     background-color:rgb(0, 0, 0);

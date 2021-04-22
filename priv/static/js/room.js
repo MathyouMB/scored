@@ -2,7 +2,7 @@
     class RequestHandler {
       revealVotes() {
         if (isOwner() == true) {
-          fetch('http://localhost:4000/api/reveal/' + getRoomId(), {
+          fetch('http' + getEnv() + '://' + getDomain() + '/api/reveal/' + getRoomId(), {
               method: 'PUT',
               headers: {
                   'Content-Type': 'application/json',
@@ -16,7 +16,7 @@
 
       resetVotes() {
         if (isOwner() == true) {
-          fetch('http://localhost:4000/api/reset/' + getRoomId(), {
+          fetch('http' + getEnv() + '://' + getDomain() + '/api/reset/' + getRoomId(), {
               method: 'PUT',
               headers: {
                   'Content-Type': 'application/json',
@@ -31,16 +31,24 @@
 
     class WebsocketHandler {
       setupSocket() {
-        this.socket = new WebSocket('ws://localhost:4000/ws/' + getRoomId())
+        this.socket = new WebSocket('ws' + getEnv() + '://' + getDomain() + '/ws/' + getRoomId())
   
         this.socket.addEventListener("message", (event) => {
-          if (JSON.parse(event.data).message !== "owner_revealed") {
-            drawCards(JSON.parse(event.data).room)
-          } else {
+          if (JSON.parse(event.data).message === "owner_revealed") {
             let cards = document.querySelectorAll(".card")
             for (let i = 0; i < cards.length; i++) {
               cards[i].classList.toggle('is-flipped')
             }
+          } else if (JSON.parse(event.data).message === "owner_reset") {
+            let votes = document.querySelectorAll('.vote-button')
+
+            for(let i = 0; i < votes.length; i++) {
+              votes[i].disabled = false;
+            }
+
+            drawCards(JSON.parse(event.data).room)
+          } else {
+            drawCards(JSON.parse(event.data).room)
           }
         })
   
@@ -59,6 +67,12 @@
             data: {vote: message},
           })
         )
+
+        let votes = document.querySelectorAll('.vote-button')
+
+            for(let i = 0; i < votes.length; i++) {
+              votes[i].disabled = true;
+            }
       }
     }
 
@@ -70,6 +84,26 @@
       }
 
       return room_id
+    }
+
+    const getDomain = () => {
+      let domain = (new URL(window.location.href))
+      
+      if (domain.hostname === 'localhost') {
+          return domain.hostname + ':4000' 
+      }
+
+      return domain.hostname
+    }
+
+    const getEnv = () => {
+      let domain = (new URL(window.location.href))
+      
+      if (domain.hostname === 'localhost') {
+          return ''
+      }
+
+      return 's'
     }
 
     const isOwner = () => {
@@ -88,7 +122,7 @@
         let card = document.createElement('div')
         card.className = 'card' + (room.hidden ? "" : " is-flipped")
         card.innerHTML = `
-          <div class="card__face card__face--front">?</div>
+          <div class="card__face card__face--front">...</div>
           <div class="card__face card__face--back">` + room.votes[i] +`</div>
         `
         cards.appendChild(card)
@@ -112,6 +146,7 @@
     websocketClass.setupSocket()
 
     if (isOwner() == false) {
+      document.get
       document.getElementById("reveal").parentNode.parentNode.removeChild(document.getElementById("reveal").parentNode)
     } else {
       document.getElementById("reveal")
@@ -137,4 +172,6 @@
       .addEventListener("click", (event) => websocketClass.submit(event, document.getElementById("button-13")))
     document.getElementById("button-21")
       .addEventListener("click", (event) => websocketClass.submit(event, document.getElementById("button-21")))
+    document.getElementById("button-?")
+      .addEventListener("click", (event) => websocketClass.submit(event, document.getElementById("button-?")))
   })()
